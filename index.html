@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alles Gute zum Geburtstag!</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="hero">
+    <div class="crest">🔴⚪</div>
+    <h1 id="greeting">Alles Gute zum Geburtstag!</h1>
+    <p id="message" class="message"></p>
+  </header>
+
+  <main>
+    <section id="photos" class="photos hidden"></section>
+
+    <section class="matchcard">
+      <h2>Mainz 05 Spieltags-Vorhersage</h2>
+      <div id="match-status" class="status">Lade Spieldaten…</div>
+
+      <div id="match-details" class="match-details hidden">
+        <div class="teams">
+          <span id="team-home">Heim</span>
+          <span class="vs">vs</span>
+          <span id="team-away">Auswärts</span>
+        </div>
+        <div id="kickoff" class="kickoff"></div>
+
+        <div id="prediction-box" class="prediction-box hidden">
+          <div class="prediction-label">Vorhersage des Tages</div>
+          <div id="prediction-score" class="prediction-score"></div>
+          <div id="prediction-quote" class="prediction-quote"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="history">
+      <h2>Mainz 05 – Saison <span id="season-label"></span></h2>
+      <div id="table-position" class="table-position">Lade Tabelle…</div>
+      <div id="played-games" class="played-games">Lade Spiele…</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Mit ❤️ gemacht</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+:root {
+  --mainz-red: #c8102e;
+  --mainz-red-dark: #8f0b20;
+  --paper: #fdfdfd;
+  --ink: #222;
+  --muted: #6b6b6b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--mainz-red), var(--mainz-red-dark));
+  color: white;
+  text-align: center;
+  padding: 3rem 1.5rem 2.5rem;
+}
+
+.crest {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero h1 {
+  margin: 0 0 0.75rem;
+  font-size: 2rem;
+}
+
+.message {
+  max-width: 32rem;
+  margin: 0 auto;
+  line-height: 1.5;
+  font-size: 1.05rem;
+}
+
+main {
+  max-width: 40rem;
+  margin: -1.5rem auto 2rem;
+  padding: 0 1rem;
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.photos img {
+  width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: block;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.matchcard {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 1.5rem;
+}
+
+.matchcard h2 {
+  margin-top: 0;
+  color: var(--mainz-red-dark);
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.status {
+  text-align: center;
+  color: var(--muted);
+}
+
+.match-details {
+  text-align: center;
+}
+
+.teams {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.vs {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.kickoff {
+  color: var(--muted);
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.prediction-box {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 2px dashed var(--mainz-red);
+  border-radius: 0.5rem;
+  background: #fff5f6;
+}
+
+.prediction-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mainz-red-dark);
+  font-weight: 600;
+}
+
+.prediction-score {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0.35rem 0;
+  color: var(--ink);
+}
+
+.prediction-quote {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.history {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.history h2 {
+  margin-top: 0;
+  color: var(--mainz-red-dark);
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.table-position {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.played-games {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.game-card {
+  border: 1px solid #eee;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.game-header {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.goal-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.goal-list li {
+  margin-bottom: 0.15rem;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding-bottom: 2rem;
+}
