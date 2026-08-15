@@ -221,31 +221,115 @@ function buildGameCard(match) {
   return card;
 }
 
+async function fetchTable(season) {
+  const res = await fetch(
+    `https://api.openligadb.de/getbltable/${CONFIG.league}/${season}`
+  );
+  if (!res.ok) throw new Error("Tabelle-API-Fehler: " + res.status);
+  return res.json();
+}
+
+function buildLeagueTable(table) {
+  const tableEl = document.createElement("table");
+  tableEl.className = "league-table-table";
+
+  const thead = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  ["#", "Team", "Sp", "S", "U", "N", "Tore", "Diff", "Pkt"].forEach((label) => {
+    const th = document.createElement("th");
+    th.textContent = label;
+    headRow.appendChild(th);
+  });
+  thead.appendChild(headRow);
+  tableEl.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  table.forEach((t, i) => {
+    const row = document.createElement("tr");
+    if (t.teamName?.includes(CONFIG.teamMatch)) {
+      row.className = "own-team";
+    }
+    [
+      i + 1,
+      t.teamName,
+      t.matches,
+      t.won,
+      t.draw,
+      t.lost,
+      `${t.goals}:${t.opponentGoals}`,
+      t.goalDiff,
+      t.points,
+    ].forEach((value) => {
+      const td = document.createElement("td");
+      td.textContent = value;
+      row.appendChild(td);
+    });
+    tbody.appendChild(row);
+  });
+  tableEl.appendChild(tbody);
+
+  return tableEl;
+}
+
+async function loadLeagueTable() {
+  const labelEl = document.getElementById("league-table-season-label");
+  const contentEl = document.getElementById("league-table-content");
+  let season = getCurrentSeasonYear();
+  labelEl.textContent = `${season}/${season + 1}`;
+
+  try {
+    let table = await fetchTable(season);
+
+    // Vor Saisonstart existiert die Tabelle zwar schon (alle Teams gelistet),
+    // aber noch ohne gespielte Spiele; dann stattdessen die Tabelle der
+    // letzten Saison zeigen.
+    if (table.length === 0 || !table.some((t) => t.matches > 0)) {
+      season -= 1;
+      table = await fetchTable(season);
+      labelEl.textContent = `${season}/${season + 1}`;
+    }
+
+    contentEl.innerHTML = "";
+    contentEl.appendChild(buildLeagueTable(table));
+  } catch (err) {
+    contentEl.textContent = "Tabelle konnte nicht geladen werden.";
+    console.error(err);
+  }
+}
+
+loadLeagueTable();
+
 async function loadSeasonInfo() {
   const positionEl = document.getElementById("table-position");
   const gamesEl = document.getElementById("played-games");
-  const season = getCurrentSeasonYear();
+  let season = getCurrentSeasonYear();
   document.getElementById("season-label").textContent = `${season}/${season + 1}`;
 
   try {
-    const [tableRes, matchesRes] = await Promise.all([
-      fetch(`https://api.openligadb.de/getbltable/${CONFIG.league}/${season}`),
-      fetch(`https://api.openligadb.de/getmatchdata/${CONFIG.league}/${season}`),
-    ]);
+    let table = await fetchTable(season);
 
-    if (tableRes.ok) {
-      const table = await tableRes.json();
-      const index = table.findIndex((t) =>
-        t.teamName?.includes(CONFIG.teamMatch)
-      );
-      positionEl.textContent =
-        index >= 0
-          ? `Tabellenplatz: ${index + 1}. von ${table.length} (${table[index].points} Punkte)`
-          : "Kein Tabelleneintrag gefunden.";
-    } else {
-      positionEl.textContent = "Tabelle konnte nicht geladen werden.";
+    // Vor Saisonstart existiert die Tabelle zwar schon (alle Teams gelistet),
+    // aber noch ohne gespielte Spiele; dann stattdessen die Tabelle der
+    // letzten Saison zeigen.
+    const hasPlayedMatches = table.some((t) => t.matches > 0);
+    if (table.length === 0 || !hasPlayedMatches) {
+      season -= 1;
+      table = await fetchTable(season);
+      document.getElementById("season-label").textContent =
+        `${season}/${season + 1}`;
     }
 
+    const index = table.findIndex((t) =>
+      t.teamName?.includes(CONFIG.teamMatch)
+    );
+    positionEl.textContent =
+      index >= 0
+        ? `Tabellenplatz: ${index + 1}. von ${table.length} (${table[index].points} Punkte)`
+        : "Kein Tabelleneintrag gefunden.";
+
+    const matchesRes = await fetch(
+      `https://api.openligadb.de/getmatchdata/${CONFIG.league}/${season}`
+    );
     if (matchesRes.ok) {
       const matches = await matchesRes.json();
       const played = matches

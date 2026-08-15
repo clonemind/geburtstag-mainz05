@@ -137,6 +137,7 @@ main {
   color: var(--muted);
 }
 
+.league-table,
 .history {
   background: white;
   border-radius: 0.75rem;
@@ -145,11 +146,47 @@ main {
   margin-top: 1.5rem;
 }
 
+.league-table h2,
 .history h2 {
   margin-top: 0;
   color: var(--mainz-red-dark);
   font-size: 1.2rem;
   text-align: center;
+}
+
+.league-table-content {
+  text-align: center;
+  color: var(--muted);
+  overflow-x: auto;
+}
+
+.league-table-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.league-table-table th,
+.league-table-table td {
+  padding: 0.4rem 0.3rem;
+  border-bottom: 1px solid #eee;
+}
+
+.league-table-table th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.league-table-table td:nth-child(2),
+.league-table-table th:nth-child(2) {
+  text-align: left;
+}
+
+.league-table-table tr.own-team {
+  background: #fff5f6;
+  font-weight: 600;
+  color: var(--mainz-red-dark);
 }
 
 .table-position {
